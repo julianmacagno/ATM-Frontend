@@ -1,6 +1,15 @@
-<label>Username</label>
-<input type="text" [(ngModel)]="username">
-<label>Password</label>
-<input type="password" [(ngModel)]="password">
-<button (click)="login()">Login</button>
-
+<div class="mycontainer">
+    <mat-card>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+            <mat-form-field>
+                <input matInput [(ngModel)]="username" type="text" placeholder="Username" (keyup.enter)="login()">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="password" type="password" placeholder="Password" (keyup.enter)="login()">
+            </mat-form-field>
+            <br>
+            <button mat-raised-button color="primary" (click)="login()">Login</button>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,21 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule, MatInputModule, MatButtonModule, MatTableModule, MatDialogModule } from '@angular/material';
+
+import { AppComponent } from './app.component';
 import { AtmComponent } from './components/atm/atm.component';
 import { LoginComponent } from './components/login/login.component';
+import { MapDialogComponent } from './components/dialogs/map-dialog/map-dialog.component';
+
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule, MatInputModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [
     AppComponent,
     AtmComponent,
     LoginComponent,
+    MapDialogComponent,
     SafeUrlPipe
   ],
   imports: [
@@ -24,11 +27,14 @@ import { MatCardModule, MatInputModule, MatButtonModule } from '@angular/materia
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatCardModule, 
-    MatInputModule, 
-    MatButtonModule
+    MatCardModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [MapDialogComponent]
 })
 export class AppModule { }
