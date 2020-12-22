@@ -31,7 +31,7 @@
     </mat-card>
 </div>
 
-<div class="mycontainer">
+<div *ngIf="result !== undefined && result !== null && result.length > 0" class="mycontainer">
     <table mat-table [dataSource]="result" class="mat-elevation-z8" #tabla1>
         <ng-container matColumnDef="Street">
             <th mat-header-cell *matHeaderCellDef> Street </th>

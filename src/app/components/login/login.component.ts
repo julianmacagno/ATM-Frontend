@@ -19,13 +19,16 @@ export class LoginComponent {
   login() : void {
     this.loginService.login(this.username, this.password).subscribe(
       result => {
-        if(result.hasOwnProperty("token") && Object(result).token !== "") {
+        if(result !== null && result.hasOwnProperty("token") && Object(result).token !== "") {
           console.log(Object(result).token);
           localStorage.setItem("token", Object(result).token);
           this.router.navigate(['/atm']);
+        } else {
+          alert("The information you have entered is wrong");
         }
       }, error => {
         console.log(error);
+        alert("An error has ocurred");
       }
     );
   }

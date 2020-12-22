@@ -9,6 +9,7 @@ import { MapDialogComponent } from '../dialogs/map-dialog/map-dialog.component';
   templateUrl: './atm.component.html',
   styleUrls: ['./atm.component.css']
 })
+
 export class AtmComponent implements OnInit {
   token: string;
   street: string;
@@ -22,6 +23,8 @@ export class AtmComponent implements OnInit {
   result: Object;
   mapsUrl: string;
   columns: string[] = ["Street", "Housenumber", "Postalcode", "City", "Latitude", "Longitude", "Distance", "Type", "Show Map"];
+  fieldList: string = "";
+  qList: string = "";
   
   @ViewChild(MatTable, {static: false}) tabla1: MatTable<any>;
 
@@ -40,64 +43,42 @@ export class AtmComponent implements OnInit {
   }
   
   searchAtm(): void {
+    this.qList = "";
+    this.fieldList = "";
+
     if (this.token !== undefined && this.token !== "" && this.token.startsWith("Bearer ")) {
-      let fieldList: string = "";
-      let qList: string = "";
+      
+      this.formParameter(this.street, "street");
+      this.formParameter(this.housenumber, "housenumber");
+      this.formParameter(this.postalcode,"postalcode");
+      this.formParameter(this.city,"city");
+      this.formParameter(this.lat,"lat");
+      this.formParameter(this.lng,"lng");
+      this.formParameter(this.distance,"distance");
+      this.formParameter(this.type,"type");
 
-      if (this.street !== undefined && this.street !== "") {
-        fieldList += "street,";
-        qList += this.street + ",";
-      }
+      if (this.fieldList !== undefined && this.fieldList.endsWith(","))
+        this.fieldList = this.fieldList.slice(0, this.fieldList.lastIndexOf(","));
 
-      if (this.housenumber !== undefined && this.housenumber !== "") {
-        fieldList += "housenumber,";
-        qList += this.housenumber + ",";
-      }
+      if (this.qList !== undefined && this.qList.endsWith(","))
+        this.qList = this.qList.slice(0, this.qList.lastIndexOf(","));
 
-      if (this.postalcode !== undefined && this.postalcode !== "") {
-        fieldList += "postalcode,";
-        qList += this.postalcode + ",";
-      }
-
-      if (this.city !== undefined && this.city !== "") {
-        fieldList += "city,";
-        qList += this.city + ",";
-      }
-
-      if (this.lat !== undefined && this.lat !== "") {
-        fieldList += "lat,";
-        qList += this.lat + ",";
-      }
-
-      if (this.lng !== undefined && this.lng !== "") {
-        fieldList += "lng,";
-        qList += this.lng + ",";
-      }
-
-      if (this.distance !== undefined && this.distance !== "") {
-        fieldList += "distance,";
-        qList += this.distance + ",";
-      }
-
-      if (this.type !== undefined && this.type !== "") {
-        fieldList += "type,";
-        qList += this.type + ",";
-      }
-
-      if (fieldList !== undefined && fieldList.endsWith(","))
-        fieldList = fieldList.slice(0, fieldList.lastIndexOf(","));
-
-      if (qList !== undefined && qList.endsWith(","))
-        qList = qList.slice(0, qList.lastIndexOf(","));
-
-      this.atmService.searchAtm(qList, fieldList, this.token)
+      this.atmService.searchAtm(this.qList, this.fieldList, this.token)
         .subscribe(
           result => {
             this.result = result;
+            console.log(result);
           }, error => {
             console.log(error);
           }
         );
+    }
+  }
+
+  formParameter(param: string, paramName: string) {
+    if (param !== undefined && param !== "") {
+      this.fieldList += paramName + ",";
+      this.qList += param + ",";
     }
   }
 }
