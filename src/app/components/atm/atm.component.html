@@ -1,0 +1,49 @@
+<h1>Ingrese los filtros por los que desea buscar!</h1>
+<label>Street</label>
+<input type="text" [(ngModel)]="street">
+<label>Housenumber</label>
+<input type="number" [(ngModel)]="housenumber">
+<label>Postalcode</label>
+<input type="text" [(ngModel)]="postalcode">
+<label>City</label>
+<input type="text" [(ngModel)]="city">
+<label>Latitude</label>
+<input type="text" [(ngModel)]="lat">
+<label>Longitude</label>
+<input type="text" [(ngModel)]="lng">
+<label>Distance</label>
+<input type="number" [(ngModel)]="distance">
+<label>Type</label>
+<input type="text" [(ngModel)]="type">
+<button (click)="searchAtm()">Buscar</button>
+
+<div *ngIf="mapsUrl !== undefined">
+    <iframe [src]="mapsUrl | safeUrl" width="315" height="315" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<div *ngIf="result !== undefined">
+    <table>
+        <thead>
+            <th>Street</th>
+            <th>Housenumber</th>
+            <th>Postalcode</th>
+            <th>City</th>
+            <th>Lat</th>
+            <th>Lng</th>
+            <th>Distance</th>
+            <th>Type</th>
+        </thead>
+        <tbody *ngFor="let atm of result">
+            <td>{{atm.address.street}}</td>
+            <td>{{atm.address.housenumber}}</td>
+            <td>{{atm.address.postalcode}}</td>
+            <td>{{atm.address.city}}</td>
+            <td>{{atm.address.geoLocation.lat}}</td>
+            <td>{{atm.address.geoLocation.lng}}</td>
+            <td>{{atm.distance}}</td>
+            <td>{{atm.type}}</td>
+            <td> <button (click)="setMapUrl(atm.address.geoLocation.lat, atm.address.geoLocation.lng)"> Mostrar mapa
+                </button> </td>
+        </tbody>
+    </table>
+</div>
